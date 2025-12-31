@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://doonfix.in/sitemap.xml
