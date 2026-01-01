@@ -59,7 +59,7 @@ console.log(location.state);
             <div className="flex items-center gap-3">
 
               {/* Book Button (Desktop) */}
-              <button className="relative overflow-hidden hidden sm:inline-flex bg-green-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-600">
+              <button onClick={() =>   navigate("/book")} className="relative overflow-hidden hidden sm:inline-flex bg-green-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-600">
                 Book Now
                   <span className="shine-layer"></span>
 
@@ -93,10 +93,10 @@ console.log(location.state);
         {!hideMenu && menuOpen && (
           <div className="md:hidden pb-4">
             <nav className="flex flex-col gap-4 text-md font-bold">
-              <Link to="/" className="hover:text-green-600"onClick={() => setMenuOpen(false)}>Home</Link>
-              <Link to="/services" className="hover:text-green-600" onClick={() => setMenuOpen(false)}>Services</Link>
-              <Link to="/about" className="hover:text-green-600"onClick={() => setMenuOpen(false)}>About us</Link>
-              <Link to="/contact" className="hover:text-green-600"onClick={() => setMenuOpen(false)}>Contact us</Link>
+              <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
+              <Link to="/services" onClick={() => setMenuOpen(false)}>Services</Link>
+              <Link to="/about" onClick={() => setMenuOpen(false)}>About us</Link>
+              <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact us</Link>
 
               {!(isServiceDetail || isBookingPage) && (
                 <button onClick={() =>   navigate("/book")} className="relative overflow-hidden mt-2 bg-green-500 text-white px-4 py-2 rounded-lg">
