@@ -1,24 +1,27 @@
 import { FaWhatsapp, FaPhone, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
+import {useStrings} from "../utils/Utils"
+import {openWhatsApp} from "../utils/Utils"
 
 export default function Contact() {
+    const t = useStrings();
+  
   const whatsappNumber = "+919084437614";
 
-  const handleWhatsAppClick = () => {
-    const message = encodeURIComponent(
-      "Hi DoonFix 👋 I want to book a service."
+const handleWhatsAppClick = () => {
+    openWhatsApp(
+      whatsappNumber,
+      t.contact.whatsappMsg
     );
-    window.open(`https://wa.me/${whatsappNumber}?text=${message}`, "_blank");
   };
-
   return (
     <div className="bg-gray-50 min-h-screen">
       <main className="max-w-3xl mx-auto px-4 py-10">
 
         {/* HEADER */}
         <header className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-gray-900">Contact Us</h1>
+          <h1 className="text-3xl font-bold text-gray-900">{t.contact.header}</h1>
           <p className="text-gray-600 mt-2">
-            Get in touch with DoonFix for home services in Dehradun
+            {t.contact.headerDes}
           </p>
         </header>
 
@@ -26,7 +29,7 @@ export default function Contact() {
         <section className="bg-white rounded-2xl shadow-sm p-6 mb-8 space-y-4">
           <div className="flex items-center gap-3">
             <FaMapMarkerAlt className="text-green-600 text-xl" />
-            <p>Banjarawala, Dehradun, Uttarakhand, 248001</p>
+            <p>{t.contact.address}</p>
           </div>
           <div className="flex items-center gap-3">
             <FaPhone className="text-green-600 text-xl" />
@@ -56,10 +59,10 @@ export default function Contact() {
           >
             <span className="shine-layer"></span>
             <FaWhatsapp size={20} />
-            <span className="relative z-10">Chat on WhatsApp</span>
+            <span className="relative z-10">{t.contact.buttonText}</span>
           </button>
           <p className="text-gray-500 text-sm mt-2">
-            We'll respond quickly and help you book a service
+            {t.contact.msg}
           </p>
         </section>
 

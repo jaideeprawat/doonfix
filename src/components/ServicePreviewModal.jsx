@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { X, ChevronRight } from "lucide-react";
-import { services } from "../data/services";
+import {useData,useStrings} from "../utils/Utils"
 import ServiceProblemCard from "./ServiceProblemCard";
 export default function ServicePreviewModal({
   category,
@@ -8,7 +8,9 @@ export default function ServicePreviewModal({
   handleViewDetailClick,
   handleServiceClick,
 }) {
+  const services=useData();
   const service = services[category];
+      const t = useStrings();
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -80,7 +82,8 @@ onBook={() => handleServiceClick(category, work.id)}
 ">
   <p className="text-xs flex items-center justify-center gap-1 text-gray-500">
   <span className="text-green-500 font-semibold">✔</span>
-  Verified local technicians · Same day service
+    {t.serviceProblem.verified}
+
 </p>
 
 
@@ -99,7 +102,7 @@ onBook={() => handleServiceClick(category, work.id)}
     transition-all
   "
 >
-  View full details
+  {t.serviceProblem.view}
   <ChevronRight size={16} />
 </button>
 

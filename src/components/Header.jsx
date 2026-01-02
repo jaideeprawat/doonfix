@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-
+import LanguageToggle from "./LanguageToggle";
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
@@ -57,7 +57,7 @@ console.log(location.state);
           {/* Right Actions */}
           {!hideMenu && (
             <div className="flex items-center gap-3">
-
+             <LanguageToggle></LanguageToggle>
               {/* Book Button (Desktop) */}
               <button onClick={() =>   navigate("/book")} className="relative overflow-hidden hidden sm:inline-flex bg-green-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-600">
                 Book Now

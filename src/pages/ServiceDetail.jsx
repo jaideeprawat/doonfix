@@ -1,10 +1,13 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { services } from "../data/services";
 import { CheckCircle } from "lucide-react";
+import {useStrings,useData} from "../utils/Utils"
+
 
 export default function ServiceDetail() {
   const { slug } = useParams();
   const navigate = useNavigate();
+const t= useStrings();
+const services= useData();
 
   const service = services[slug];
 
@@ -22,19 +25,21 @@ export default function ServiceDetail() {
       {/* Header */}
       <header className="text-center mb-8">
         <h1 className="text-2xl sm:text-3xl font-semibold text-gray-900">
-          {service.label} in Dehradun
+          {/* {service.label} in Banjarawala, Dehradun */}
+          {t.serviceDetail.title.replace("{service}",service.label)}
         </h1>
         <p className="mt-2 text-sm text-gray-500">
-          Trusted local professionals · Fast & reliable
+          {t.serviceDetail.subTitle}
         </p>
       </header>
 
       {/* Intro (SEO) */}
-      <p className="text-gray-600 mb-10 leading-relaxed max-w-3xl mx-auto text-center">
-        Looking for reliable {service.label.toLowerCase()} services in
+      <p className="text-gray-600 mb-10 leading-relaxed max-w-3xl mx-auto text-center"
+      dangerouslySetInnerHTML={{ __html: t.serviceDetail.intro.replace("{service}",service.label.toLowerCase()) }}>
+        {/* Looking for reliable {service.label.toLowerCase()} services in
         Banjarawala, Dehradun? DoonFix connects you with verified local
         technicians for fast, affordable, and professional service at your
-        doorstep.
+        doorstep. */}
       </p>
 
       {/* Work Types */}
@@ -99,7 +104,7 @@ export default function ServiceDetail() {
     transition-all
   "
             >
-              Book {service.label}
+              {t.serviceDetail.book.replace("{service}",service.label)}
             </button>
           </div>
         ))}
@@ -108,21 +113,18 @@ export default function ServiceDetail() {
       {/* Coverage Area */}
       <section className="mt-12 max-w-3xl mx-auto">
         <h2 className="text-lg font-semibold text-gray-900 mb-2">
-          Areas We Serve
+          {t.serviceDetail.area}
         </h2>
         <p className="text-gray-600 text-sm leading-relaxed">
-          Banjarawala, Kargi, Bangali Kothi, Mothorowala and nearby areas
-          within 5 km.
+                    {t.serviceDetail.areaDetail}
+
         </p>
       </section>
 
       {/* Trust Section */}
       <section className="mt-10 max-w-3xl mx-auto space-y-2">
-        {[
-          "Background verified technicians",
-          "Transparent pricing",
-          "Same-day service available",
-        ].map((item) => (
+        {                    t.serviceDetail.list
+.map((item) => (
           <div
             key={item}
             className="flex items-center gap-2 text-sm text-gray-600"

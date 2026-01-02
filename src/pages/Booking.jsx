@@ -1,12 +1,16 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { services } from "../data/services";
+import {useData,useStrings} from "../utils/Utils"
+
 import CategoryGrid from "../components/CategoryGrid";
 import ServiceProblemCard from "../components/ServiceProblemCard";
 import { FaWhatsapp } from "react-icons/fa";
 import { FloatingInput, FloatingTextarea } from "../components/FloatingInput";
 
 export default function Booking() {
+  const services=useData();
+    const t=useStrings();
+
   const { serviceId, problemId } = useParams();
   const navigate = useNavigate();
 
@@ -29,8 +33,8 @@ export default function Booking() {
   }, [service, problemId, problem, navigate, serviceId]);
 useEffect(() => {
   function handleVisibilityChange() {
-    if (document.visibilityState === "visible") {
-      alert("If you haven’t sent the WhatsApp message yet, please send it to confirm your booking.");
+    if (document.visibilityState === "visible" && service && problem) {
+      alert(t.booking.confirmAlert);
 
     }
   }
@@ -51,15 +55,15 @@ useEffect(() => {
   function validate() {
     const newErrors = {};
 
-    if (!name.trim()) newErrors.name = "Required";
+    if (!name.trim()) newErrors.name = t.booking.required;
 
     if (!phone.trim()) {
-      newErrors.phone = "Required";
+      newErrors.phone = t.booking.required;
     } else if (!isValidIndianPhone(phone)) {
-      newErrors.phone = "Enter valid 10-digit number";
+      newErrors.phone = t.booking.phonePlaceholder;
     }
 
-    if (!address.trim()) newErrors.address = "Required";
+    if (!address.trim()) newErrors.address = t.booking.required;
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -81,23 +85,17 @@ useEffect(() => {
     if (!validate()) return;
 
     setLoading(true);
-
     const cleanPhone = phone.replace(/\D/g, "");
 
-    const message = `
-Hi DoonFix 👋
-
-🔧 Service: ${service.label}
-🛠 Problem: ${problem.title}
-💰 Price: ${problem.price}
-
-👤 Name: ${name}
-📞 Phone: +91 ${cleanPhone}
-📍 Address: ${address}
-📝 Note: ${note || "No note"}
-
-Please confirm availability.
-    `;
+    const message = t.booking.whatsappMessage
+  .replace("{service}", service.label)
+  .replace("{problem}", problem.title)
+  .replace("{price}", problem.price)
+  .replace("{name}", name)
+  .replace("{phone}", cleanPhone)
+  .replace("{address}", address)
+  .replace("{note}", note || t.booking.noNote);
+  console.log("msg",message)
 
     window.open(
       `https://wa.me/919084437614?text=${encodeURIComponent(message)}`,
@@ -105,7 +103,7 @@ Please confirm availability.
     );
 
     setTimeout(() => {
-      alert("WhatsApp opened. Please send the message to confirm booking.");
+            alert(t.booking.alert);
       setLoading(false);
     }, 800);
   }
@@ -119,20 +117,18 @@ Please confirm availability.
 
       {/* ---------------- STEP 0: CATEGORY ---------------- */}
       {!service && (
-        <div className="max-w-xl mx-auto px-4 pt-6">
           <CategoryGrid
             setCategory={(id) =>
               navigate(`/book/${id}`, { state: { fromApp: true } })
             }
           />
-        </div>
       )}
 
       {/* ---------------- STEP 1: PROBLEM ---------------- */}
       {service && !problem && (
         <div className="max-w-md mx-auto px-4 pt-6 space-y-5">
           <h2 className="font-semibold text-lg">
-            What kind of work do you need?
+            {t.booking.problemHeading}
           </h2>
 
           {service.problems.map(work => (
@@ -189,14 +185,14 @@ Please confirm availability.
             <div className="bg-white rounded-2xl shadow-sm p-4 mt-4 space-y-4">
 
               <FloatingInput
-                label="Your name"
+                label={t.booking.nameLabel}
                 value={name}
                 error={errors.name}
                 onChange={(e) => handleChange("name", e.target.value)}
               />
 
               <FloatingInput
-                label="WhatsApp number"
+                label={t.booking.phoneLabel}
                 type="tel"
                 value={phone}
                 error={errors.phone}
@@ -205,29 +201,26 @@ Please confirm availability.
                 }
               />
               <p className="text-xs text-gray-500 -mt-2 ml-1">
-                We’ll contact you on this number for booking confirmation
+                {t.booking.infoPhone}
               </p>
 
               <FloatingTextarea
-                label="Service address"
+                label={t.booking.addressLabel}
                 rows={2}
                 value={address}
                 error={errors.address}
                 onChange={(e) => handleChange("address", e.target.value)}
               />
               <p className="text-xs text-gray-500 -mt-2 ml-1">
-                Please enter full address so technician can reach you easily
+                {t.booking.addressPlaceholder}
               </p>
 
               <FloatingTextarea
-                label="Describe issue (optional)"
+                label={t.booking.issueLabel}
                 rows={3}
                 value={note}
                 onChange={(e) => handleChange("note", e.target.value)}
               />
-              <p className="text-xs text-gray-400 -mt-2 ml-1">
-                Mention any special details to help the technician prepare better
-              </p>
             </div>
           </main>
 
@@ -251,11 +244,11 @@ Please confirm availability.
               >
                 <span className="shine-layer"></span>
                 <FaWhatsapp size={20} />
-                {loading ? "Opening WhatsApp..." : "Book on WhatsApp"}
+                {loading ? t.booking.bookBtnOpen : t.booking.bookBtn}
               </button>
 
               <p className="text-xs text-center text-gray-500 mt-2">
-                Trusted local professionals • No advance payment
+                {t.booking.ctcInfo}
               </p>
             </div>
           </div>

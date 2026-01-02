@@ -1,7 +1,11 @@
+import {useStrings} from "../utils/Utils"
+
 export default function ServiceProblemCard({
   work,
   onBook,
 }) {
+      const t = useStrings();
+  
   return (
     <div
       className="
@@ -56,7 +60,7 @@ export default function ServiceProblemCard({
           transition-all
         "
       >
-        Book service
+        {t.serviceProblem.bookBtn}
       </button>
     </div>
   );

@@ -1,4 +1,4 @@
-import { services } from "../data/services";
+import {useData,useStrings} from "../utils/Utils"
 import {
   Zap,
   Droplet,
@@ -19,21 +19,22 @@ const iconMap = {
 };
 
 export default function CategoryGrid({ setCategory }) {
+   const t=useStrings();
   return (
     <section className="scroll-mt-16 px-4 sm:px-6 lg:px-8 py-10">
       {/* Heading */}
         <div className="text-center mb-10">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
-            What service do you need?
+            {t.category.title}
           </h2>
           <p className="mt-2 text-gray-600 text-sm md:text-base">
-           Choose a category to get started
+           {t.category.subtitle}
           </p>
         </div>
 
       {/* Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
-        {Object.values(services).map((service) => {
+        {Object.values(useData()).map((service) => {
           const Icon = iconMap[service.icon];
 
           return (

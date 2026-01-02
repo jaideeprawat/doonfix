@@ -8,48 +8,39 @@ import {
   FaSolarPanel,
   FaTint
 } from "react-icons/fa";
+import {useStrings} from "../utils/Utils"
+
 
 export default function Services() {
   const navigate = useNavigate();
+    const t = useStrings();
 
   const services = [
-    {
-      id: "electrician",
-      name: "Electrician",
-      desc: "Wiring, switches, lights, fans & power issues",
-      icon: <FaBolt />,
-    },
-    {
-      id: "plumber",
-      name: "Plumber",
-      desc: "Leakage, taps, pipes, bathrooms & kitchens",
-      icon: <FaTools />,
-    },
-    {
-      id: "ac",
-      name: "AC Repair & Service",
-      desc: "AC installation, servicing & gas refill",
-      icon: <FaSnowflake />,
-    },
-    {
-      id: "carpenter",
-      name: "Carpenter",
-      desc: "Furniture repair, doors & fittings",
-      icon: <FaHammer />,
-    },
-    {
-      id: "solar",
-      name: "Solar Installation & Service",
-      desc: "Solar panels, inverter & maintenance",
-      icon: <FaSolarPanel />,
-    },
-    {
-      id: "ro",
-      name: "RO Water Purifier Service",
-      desc: "RO installation, filter change & repair",
-      icon: <FaTint />,
-    },
-  ];
+  {
+    id: "electrician",
+    icon: <FaBolt />,
+  },
+  {
+    id: "plumber",
+    icon: <FaTools />,
+  },
+  {
+    id: "ac",
+    icon: <FaSnowflake />,
+  },
+  {
+    id: "carpenter",
+    icon: <FaHammer />,
+  },
+  {
+    id: "solar",
+    icon: <FaSolarPanel />,
+  },
+  {
+    id: "ro",
+    icon: <FaTint />,
+  },
+];
 
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -58,17 +49,21 @@ export default function Services() {
         {/* HEADER */}
         <header className="mb-8 text-center">
           <h1 className="text-3xl font-bold text-gray-900">
-            Our Services
+            {t.services.ourServices}
           </h1>
           <p className="text-gray-600 mt-2">
-            Reliable home services in Dehradun
+                        {t.services.des}
+
           </p>
         </header>
 
         {/* SERVICES GRID */}
         <section className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-10">
-          {services.map((service) => (
-            <button
+          {services.map((service) => {
+          
+            const data = t.services.allServices[service.id];
+            return(
+<button
               key={service.id}
               onClick={() =>
                 navigate(`/book/${service.id}`, {
@@ -88,39 +83,40 @@ export default function Services() {
                   {service.icon}
                 </span>
                 <h3 className="font-semibold text-gray-900">
-                  {service.name}
+                  {data.name}
                 </h3>
               </div>
 
               <p className="text-sm text-gray-600">
-                {service.desc}
+                {data.desc}
               </p>
 
               <p className="text-sm text-green-600 font-medium mt-3 group-hover:underline">
-                Book Now →
+                {t.services.book}
               </p>
             </button>
-          ))}
+            )}
+            
+          )}
         </section>
 
         {/* TRUST SECTION */}
         <section className="bg-white rounded-2xl shadow-sm p-6 mb-8">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">
-            Why Book with DoonFix?
+            {t.services.why}
           </h2>
 
           <ul className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm text-gray-700">
-            <li>✔ Verified local technicians</li>
-            <li>✔ Transparent pricing</li>
-            <li>✔ Fast response</li>
-            <li>✔ No advance payment</li>
+            {t.services.checkList.map((item, index) => (
+    <li key={index}>✔ {item}</li>
+  ))}
           </ul>
         </section>
 
         {/* SERVICE AREA */}
         <section className="text-center mb-10">
-          <p className="text-gray-600">
-            Currently serving <strong>Banjarawala, Dehradun</strong> and nearby areas.
+          <p className="text-gray-600"
+          dangerouslySetInnerHTML={{ __html: t.services.serving }}>
           </p>
         </section>
 
@@ -142,7 +138,7 @@ export default function Services() {
           >
             <span className="shine-layer"></span>
             <span className="relative z-10">
-              Book a Service on WhatsApp
+              {t.services.bookBtn}
             </span>
           </button>
         </section>

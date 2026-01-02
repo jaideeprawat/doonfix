@@ -6,41 +6,39 @@ import {
   Smartphone,
   Users
 } from "lucide-react";
+import {getFeatutesData,useStrings} from "../utils/Utils"
 
-const features = [
+
+export const list = [
   {
+    id:"verified",
     icon: ShieldCheck,
-    title: "Verified Local Professionals",
-    desc: "All service providers are background-checked and experienced in local homes."
   },
   {
+    id:"whatsApp",
     icon: Smartphone,
-    title: "Instant WhatsApp Booking",
-    desc: "No app download or login. Book directly on WhatsApp in seconds."
-  },
+   },
   {
+    id:"transparent",
     icon: IndianRupee,
-    title: "Transparent Pricing",
-    desc: "Clear pricing shared upfront. No hidden charges after work."
-  },
+   },
   {
+    id:"fast",
     icon: Clock,
-    title: "Fast Response",
-    desc: "Quick confirmation and same-day service for most requests."
-  },
+   },
   {
+    id:"mapPin",
     icon: MapPin,
-    title: "Local Dehradun Experts",
-    desc: "We understand local areas like Banjarawala, Kargi, ISBT & more."
   },
   {
+    id:"users",
     icon: Users,
-    title: "Trusted by Local Families",
-    desc: "Growing trust among Dehradun homes and small businesses."
-  }
+   },
 ];
 
 export default function WhyChooseUs() {
+    const t = useStrings();
+  
   return (
     <section className="py-12 bg-gray-50">
       <div className="max-w-6xl mx-auto px-4">
@@ -48,16 +46,21 @@ export default function WhyChooseUs() {
         {/* Heading */}
         <div className="text-center mb-10">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
-            Why Choose Doon<span className="text-green-600">Fix</span>?
+            {t.whyChoose.whyChooseBefore}{" "}
+  <span>
+    Doon<span className="text-green-600">Fix</span>
+  </span>
+  {t.whyChoose.whyChooseAfter}
           </h2>
           <p className="mt-2 text-gray-600 text-sm md:text-base">
-            Trusted local home services in Dehradun
+            {t.whyChoose.des}
           </p>
         </div>
 
         {/* Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {features.map((item, i) => {
+          {list.map((item, i) => {
+            const data = getFeatutesData()[i];
             const Icon = item.icon;
             return (
               <div
@@ -69,10 +72,10 @@ export default function WhyChooseUs() {
                 </div>
 
                 <h3 className="font-semibold text-gray-900">
-                  {item.title}
+                  {data.title}
                 </h3>
                 <p className="mt-2 text-sm text-gray-600">
-                  {item.desc}
+                  {data.desc}
                 </p>
               </div>
             );

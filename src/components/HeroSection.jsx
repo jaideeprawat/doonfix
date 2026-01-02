@@ -1,8 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import bannerImg from "../assets/images/banner.jpeg"
+import {useStrings} from "../utils/Utils"
+
 export 
 default function HeroSection() {
     const navigate = useNavigate();
+const t= useStrings();
+    
   return (
     <section className="w-full bg-white overflow-hidden">
 
@@ -16,6 +20,7 @@ default function HeroSection() {
 
         {/* Overlay */}
         <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center px-4 text-center">
+         
           {/* <h1 className="text-white text-lg sm:text-xl md:text-2xl font-semibold leading-snug">
             Trusted home services in Banjarawala
           </h1>
@@ -26,29 +31,23 @@ default function HeroSection() {
 
           {/* CTA Button */}
           <button
-  onClick={() =>
-    navigate("/book/", { state: { fromApp: true } })
-  }
+  onClick={() => navigate("/book/", { state: { fromApp: true } })}
   className="
-    relative overflow-hidden
-    mt-4
+    relative overflow-hidden mt-4
     bg-green-500 hover:bg-green-600
-    text-white
-    px-6 py-2
-    rounded-lg
-    text-sm sm:text-base
-    font-medium
-    shadow-md
+    text-white px-6 py-2
+    rounded-lg text-sm sm:text-base
+    font-medium shadow-md
   "
 >
   {/* SHINE */}
-  <span className="shine-layer"></span>
+  <span className="shine-layer absolute inset-0 z-0"></span>
 
-  {/* BUTTON TEXT */}
+  {/* TEXT */}
   <span className="relative z-10">
-    Book a Service
-  </span>
+{t.heroSection.bookBtn}  </span>
 </button>
+
 
         </div>
       </div>
